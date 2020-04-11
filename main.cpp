@@ -6,20 +6,16 @@
 #pragma comment (lib, "user32.lib")
 #pragma comment (lib, "d3d9.lib")
 
-// global declarations
-LPDIRECT3D9 d3d;    // the pointer to our Direct3D interface
-LPDIRECT3DDEVICE9 d3ddev;    // the pointer to the device class
+LPDIRECT3D9 d3d;
+LPDIRECT3DDEVICE9 d3ddev;
 
-// function prototypes
-void initD3D(HWND hWnd);    // sets up and initializes Direct3D
-void render_frame(void);    // renders a single frame
-void cleanD3D(void);    // closes Direct3D and releases memory
+void initD3D(HWND hWnd);
+void renderFrame(void);
+void cleanD3D(void);
 
-// the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 
-// the entry point for any Windows program
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine,
@@ -40,23 +36,23 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
     RegisterClassEx(&wc);
 
-    hWnd = CreateWindowEx(NULL,
-                          L"WindowClass",
-                          L"Our First Direct3D Program",
-                          WS_OVERLAPPEDWINDOW,
-                          300, 300,
-                          800, 600,
-                          NULL,
-                          NULL,
-                          hInstance,
-                          NULL);
+    hWnd = CreateWindowEx(
+        NULL,
+        L"WindowClass",
+        L"Our First Direct3D Program",
+        WS_OVERLAPPEDWINDOW,
+        300, 300,
+        800, 600,
+        NULL,
+        NULL,
+        hInstance,
+        NULL
+    );
 
     ShowWindow(hWnd, nCmdShow);
 
-    // set up and initialize Direct3D
-    initD3D(hWnd);
 
-    // enter the main loop:
+    initD3D(hWnd);
 
     MSG msg;
     bool loop = true;
@@ -73,7 +69,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        render_frame();
+        renderFrame();
     }
 
     cleanD3D();
@@ -81,8 +77,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
     return msg.wParam;
 }
 
-
-// this is the main message handler for the program
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch(message)
@@ -101,39 +95,34 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 // this function initializes and prepares Direct3D for use
 void initD3D(HWND hWnd)
 {
-    d3d = Direct3DCreate9(D3D_SDK_VERSION);    // create the Direct3D interface
+    d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
-    D3DPRESENT_PARAMETERS d3dpp;    // create a struct to hold various device information
+    D3DPRESENT_PARAMETERS d3dpp;
 
-    ZeroMemory(&d3dpp, sizeof(d3dpp));    // clear out the struct for use
-    d3dpp.Windowed = TRUE;    // program windowed, not fullscreen
-    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;    // discard old frames
-    d3dpp.hDeviceWindow = hWnd;    // set the window to be used by Direct3D
+    ZeroMemory(&d3dpp, sizeof(d3dpp));
+    d3dpp.Windowed = TRUE;
+    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+    d3dpp.hDeviceWindow = hWnd;
 
-
-    // create a device class using this information and the info from the d3dpp stuct
-    d3d->CreateDevice(D3DADAPTER_DEFAULT,
-                      D3DDEVTYPE_HAL,
-                      hWnd,
-                      D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-                      &d3dpp,
-                      &d3ddev);
+    d3d->CreateDevice(
+        D3DADAPTER_DEFAULT,
+        D3DDEVTYPE_HAL,
+        hWnd,
+        D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+        &d3dpp,
+        &d3ddev
+    );
 }
 
-
-// this is the function used to render a single frame
-void render_frame(void)
+void renderFrame(void)
 {
-    // clear the window to a deep blue
     d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
 
-    d3ddev->BeginScene();    // begins the 3D scene
+    d3ddev->BeginScene();
+    // TODO: render on the back buffer
+    d3ddev->EndScene();
 
-    // do 3D rendering on the back buffer here
-
-    d3ddev->EndScene();    // ends the 3D scene
-
-    d3ddev->Present(NULL, NULL, NULL, NULL);   // displays the created frame on the screen
+    d3ddev->Present(NULL, NULL, NULL, NULL);
 }
 
 
