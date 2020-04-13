@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"label": "C/C++: cl.exe build active file",
+			"label": "Debug build",
 			"command": "cl.exe",
 			"args": [
 				"/Zi",
@@ -12,6 +12,30 @@
 				"/DUNICODE",
 				"/DWIN32",
 				"/D_WINDOWS",
+				"/I${workspaceFolder}\\include\\",
+				"/Fe:",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				"${file}"
+			],
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Prod build",
+			"command": "cl.exe",
+			"args": [
+				"/EHsc",
+				"/D_UNICODE",
+				"/DUNICODE",
+				"/DWIN32",
+				"/D_WINDOWS",
+				"/I${workspaceFolder}\\include\\",
 				"/Fe:",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
 				"${file}"
