@@ -1,12 +1,7 @@
 #include <iostream>
 #include <windows.h>
-
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
-
-#pragma comment (lib, "user32.lib")
-#pragma comment (lib, "bin/debug/windows/x86/libEGL.dll.lib")
-#pragma comment (lib, "bin/debug/windows/x86/libGLESv2.dll.lib")
 
 EGLContext eglContext;
 EGLDisplay eglDisplay;
@@ -17,7 +12,6 @@ void renderFrame(void);
 void cleanGLES2(void);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-
 
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
@@ -53,7 +47,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
     );
 
     ShowWindow(hwnd, nCmdShow);
-
 
     initGLES2(hwnd);
 

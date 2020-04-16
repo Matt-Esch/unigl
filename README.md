@@ -32,3 +32,18 @@ modular and included by the user when required.
 
 Finally, there will be an attempt to pair this with Golang, depending on how
 easy it is to cross-compile Golang for Windows/Mac/Linux/Android/iOS/web.
+
+
+# Building angle
+
+
+  - Generating solutions on Windows (release)
+
+```
+gn gen out/Release --sln=angle-release --ide=vs2019--args="target_cpu=\"x86\"\ is_clang=false is_debug=false angle_enable_metal=false angle_enable_swiftshader=false angle_enable_vulkan=false"
+```
+
+```
+gn gen out/Debug --sln=angle-debug --ide=vs2019--args="target_cpu=\"x86\"\ is_clang=false is_debug=true angle_enable_metal=false angle_enable_swiftshader=false angle_enable_vulkan=false"
+```
+
